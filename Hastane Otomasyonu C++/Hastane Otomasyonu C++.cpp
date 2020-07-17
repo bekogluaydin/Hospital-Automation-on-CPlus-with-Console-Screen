@@ -2,13 +2,13 @@
 // ConsoleApplication1.cpp : Konsol uygulamasý için giriþ noktasýný tanýmlar.
 // ConsoleApplication1.cpp : Konsol uygulamasý için giriþ noktasýný tanýmlar.
 
-#include <iostream> // cout,cin vs. için 
-#include <conio.h> //getch(); fonksiyonu için
-#include <fstream> // dosyalama iþlemleri için 
-#include <string> // string türü için 
-#include <windows.h> //komut ekranýna renk vermek için 
-#include <clocale> // Türkçe karakter için
-#include <iomanip> //setw() için eklenen kütüphane
+#include <iostream>		// for cout,cin etc. 
+#include <conio.h>		// for "getch();" function
+#include <fstream>		// for filing processes
+#include <string>		// for string type
+#include <windows.h>	// to color the command screen
+#include <clocale>		// for Turkish character
+#include <iomanip>		//for setw()
 #include <stdio.h>
 #include <typeinfo>
 
@@ -55,7 +55,7 @@ void ReadPatient(fstream& DRead)
 	int patientAge;
 	string TcNo, Telephone;
 	char patientName[30], patientSurname[20], patientGender[15];
-	while (DRead >> TcNo >> patientName >> patientSurname >> patientAge >> Telephone >> patientGender) // kayit sayisi kadar don
+	while (DRead >> TcNo >> patientName >> patientSurname >> patientAge >> Telephone >> patientGender) // The loop continues for the number of data.
 	{
 		cout << "=======================================\n";
 		cout << "TC Kimlik No :" << TcNo << endl;
@@ -70,13 +70,15 @@ void ReadPatient(fstream& DRead)
 
 void PatientQueries(fstream& DRead, string HSorgu)
 {
+	int counter = 0;
 	int patientAge;
 	string TcNo, Telephone;
 	char patientName[30], patientSurname[20], patientGender[15];
-	while (DRead >> TcNo >> patientName >> patientSurname >> patientAge >> Telephone >> patientGender) // girilen kayit sayisi kadar don
+	while (DRead >> TcNo >> patientName >> patientSurname >> patientAge >> Telephone >> patientGender) // The loop continues for the number of data.
 	{
-		if (HSorgu == TcNo) // esitse
+		if (HSorgu == TcNo)
 		{
+			counter++;
 			cout << "=======================================\n";
 			cout << "TC Kimlik No :" << TcNo << endl;
 			cout << "Adý :" << patientName << endl;
@@ -85,13 +87,11 @@ void PatientQueries(fstream& DRead, string HSorgu)
 			cout << "Telefonu :" << Telephone << endl;
 			cout << "Cinsiyeti:" << patientGender << endl;
 			cout << "=======================================\n";
-			break;
 		}
-
-		//else { cout << "Bu Tc Kimliðe Sahip Bir Hasta Bulunmuyor! \n"; }
 	}
-}
 
+	if (counter == 0) { cout << "Bu Tc Kimliðe Sahip Bir Hasta Bulunmuyor! \n";}
+}
 
 void PatientUpdate(fstream& DRead, string HUpdate)
 {
@@ -100,11 +100,11 @@ void PatientUpdate(fstream& DRead, string HUpdate)
 	string TcNo, Telephone;
 	char patientName[30], patientSurname[20], patientGender[15];
 
-	DWrite.open("Bos.txt", ios::out); // gecici dosya olustur
+	DWrite.open("Bos.txt", ios::out); // creating temporary file
 
-	while (DRead >> TcNo >> patientName >> patientSurname >> patientAge >> Telephone >> patientGender) // kayit sayisi kadar don
+	while (DRead >> TcNo >> patientName >> patientSurname >> patientAge >> Telephone >> patientGender) // The loop continues for the number of data.
 	{
-		if (HUpdate == TcNo) // girilen barkodla , kayittaki barkodu esitse
+		if (HUpdate == TcNo)
 		{
 			cout << "=======================================\n";
 
@@ -134,16 +134,14 @@ void PatientUpdate(fstream& DRead, string HUpdate)
 			cout << "=======================================\n";
 
 			DWrite << TcNo << " " << patientName << " " << patientSurname << " " << patientAge << " " << Telephone << " " << patientGender << " " << "\n";
-			break;
+			//break;
 		}
-		else // esit degilse
-
-			DWrite << TcNo << " " << patientName << " " << patientSurname << " " << patientAge << " " << Telephone << " " << patientGender << " " << "\n";
+		else { DWrite << TcNo << " " << patientName << " " << patientSurname << " " << patientAge << " " << Telephone << " " << patientGender << " " << "\n"; }
 	}
 	DRead.close();
 	DWrite.close();
-	system("del Hasta.txt"); // eski dosyayi sil
-	rename("Bos.txt", "Hasta.txt"); // gecici dosyanin adini degistir
+	system("del Hasta.txt"); // delete old file
+	rename("Bos.txt", "Hasta.txt"); // rename temporary file
 }
 
 void UpdateAppointment(fstream& DRead, string HUpdate)
@@ -154,11 +152,11 @@ void UpdateAppointment(fstream& DRead, string HUpdate)
 	double Fee;
 	char patientName[30], patientSurname[20], patientGender[15], Date[30], DoctorName[30], Diagnosis[20];
 
-	DWrite.open("Bos.txt", ios::out); // gecici dosya olustur
+	DWrite.open("Bos.txt", ios::out); // creating temporary file
 
 	while (DRead >> TcNo >> patientName >> patientSurname >> patientAge >> Telephone >> patientGender >> Date >> DoctorName >> Diagnosis >> Fee) // girilen kayit sayisi kadar don
 	{
-		if (HUpdate == TcNo) // girilen barkodla , kayittaki barkodu esitse
+		if (HUpdate == TcNo) 
 		{
 			cout << "\n ********** Hasta Bilgileri ********** \n";
 			cout << "===========================================\n";
@@ -183,88 +181,90 @@ void UpdateAppointment(fstream& DRead, string HUpdate)
 			cin >> choose;
 			switch (choose)
 			{
-			case 'R':
-			{
-				cout << "Randevu Tarihi: " << Date << endl;
-				cout << "Yeni Randevu Tarihi: ";
-				cin >> Date;
+				case 'R':
+				{
+					cout << "Randevu Tarihi: " << Date << endl;
+					cout << "Yeni Randevu Tarihi: ";
+					cin >> Date;
 
-				DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
-				break;
-			}
-			case 'D':
-			{
-				cout << "Doktor: " << DoctorName << endl;
-				cout << "Yeni Doktor: ";
-				cin >> DoctorName;
+					DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
+					break;
+				}
+				case 'D':
+				{
+					cout << "Doktor: " << DoctorName << endl;
+					cout << "Yeni Doktor: ";
+					cin >> DoctorName;
 
-				DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
-				break;
-			}
-			case 'T':
-			{
-				cout << "Teþhis: " << Diagnosis << endl;
-				cout << "Yeni Teþhis: ";
-				cin >> Diagnosis;
+					DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
+					break;
+				}
+				case 'T':
+				{
+					cout << "Teþhis: " << Diagnosis << endl;
+					cout << "Yeni Teþhis: ";
+					cin >> Diagnosis;
 
-				DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
-				break;
-			}
-			case 'U':
-			{
-				cout << "Ücret: " << Fee << endl;
-				cout << "Yeni Ücret: ";
-				cin >> Fee;
+					DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
+					break;
+				}
+				case 'U':
+				{
+					cout << "Ücret: " << Fee << endl;
+					cout << "Yeni Ücret: ";
+					cin >> Fee;
 
-				DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
-				break;
-			}
-			case 'H':
-			{
-				cout << "Randevu Tarihi: " << Date << endl;
-				cout << "Yeni Randevu Tarihi: ";
-				cin >> Date;
+					DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
+					break;
+				}
+				case 'H':
+				{
+					cout << "Randevu Tarihi: " << Date << endl;
+					cout << "Yeni Randevu Tarihi: ";
+					cin >> Date;
 
-				cout << "Doktor: " << DoctorName << endl;
-				cout << "Yeni Doktor: ";
-				cin >> DoctorName;
+					cout << "Doktor: " << DoctorName << endl;
+					cout << "Yeni Doktor: ";
+					cin >> DoctorName;
 
-				cout << "Teþhis: " << Diagnosis << endl;
-				cout << "Yeni Teþhis: ";
-				cin >> Diagnosis;
+					cout << "Teþhis: " << Diagnosis << endl;
+					cout << "Yeni Teþhis: ";
+					cin >> Diagnosis;
 
-				cout << "Ücret: " << Fee << endl;
-				cout << "Yeni Ücret: ";
-				cin >> Fee;
+					cout << "Ücret: " << Fee << endl;
+					cout << "Yeni Ücret: ";
+					cin >> Fee;
 
-				DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
-				break;
-			}
-			}
-			DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
-			break;
+					DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
+					break;
+				}
+				default:
+				{
+					DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
+					break;
+				}
+			}			
 		}
-		else // esit degilse
-			DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n";
+		else { DWrite << TcNo << " " << patientName << ' ' << patientSurname << ' ' << patientAge << ' ' << Telephone << ' ' << patientGender << ' ' << Date << ' ' << DoctorName << ' ' << Diagnosis << ' ' << Fee << "\n"; }
 	}
 	DRead.close();
 	DWrite.close();
-	system("del RandevuAl.txt"); // eski dosyayi sil
-	rename("Bos.txt", "RandevuAl.txt"); // gecici dosyanin adini degistir
+	system("del RandevuAl.txt"); // delete old file
+	rename("Bos.txt", "RandevuAl.txt"); // rename temporary file
 }
 
 void InspectionInquiry(fstream& DRead, string HSorgu)
 {
-
+	int counter = 0;
 	int patientAge;
 	string TcNo, Telephone;
 	double Fee;
 	char patientName[30], patientSurname[20], patientGender[15], Date[30], DoctorName[30], Diagnosis[20];
 	while (DRead >> TcNo >> patientName >> patientSurname >> patientAge >> Telephone >> patientGender >> Date >> DoctorName >> Diagnosis >> Fee) // girilen kayit sayisi kadar don
-
 	{
-		if (HSorgu == TcNo) // esitse
+		if (HSorgu == TcNo)
 		{
+			counter++;
 			cout << "====================================================\n";
 			cout << "Hastanýn TC Kimlik Numarasý: " << TcNo << endl;
 			cout << "====================================================\n";
@@ -288,15 +288,19 @@ void InspectionInquiry(fstream& DRead, string HSorgu)
 			break;
 		}
 	}
+	if (counter == 0)
+	{
+		cout << "Ýlgili Hastanýn Muayene Kaydý Mevuct Deðil! \n";
+	}
 }
 
 int main()
 {
-	system("color 4B"); //komut ekranýný renklendiriyoruz
-	setlocale(LC_ALL, "turkish"); //Türkçe karakter ekliyoruz
+	system("color 4B"); //coloring command screen
+	setlocale(LC_ALL, "turkish"); //adding Turkish character
 
 	int choose;
-	string patientName; //Deðiþkenleri tanýmladýk
+	string patientName;
 	string patientSurname;
 	string TcNo;
 	string identity;
@@ -345,7 +349,6 @@ int main()
 		{
 		case 1:
 		{
-
 			cout << "1- Sisteme Hasta Kayýt Etme" << endl; //Menüden number seçerken önce kayýt ekleme yapýyoruz
 
 			ofstream DosyaYaz;
@@ -375,8 +378,6 @@ int main()
 		}
 		case 2:
 		{
-
-
 			cout << "\n Sistemdeki Hasta Kaydýný Güncelleme \n";
 			DRead.open("Hasta.txt", ios::in);
 			cout << "\n Güncellenecek Hastanýn TC identity No' su= ";
@@ -416,9 +417,6 @@ int main()
 			ReadPatient(DRead);
 			DRead.close();
 			system("pause"); break;
-
-
-
 		}
 		case 6:
 		{
@@ -460,11 +458,9 @@ int main()
 						DosyaYaz.close();
 						system("cls");
 						cout << "Randevu sisteme Kaydedildi." << endl;
-
 					}
 				}
-			}
-			break;
+			} break;
 		}
 		case 7:
 		{
@@ -473,7 +469,6 @@ int main()
 		}
 		case 8:
 		{
-
 			cout << "\n 8- Randevu güncelleme \n";
 			DRead.open("RandevuAl.txt", ios::in);
 			cout << "\n Güncellenecek Hastanýn TC Kimlik No' su= ";
@@ -481,41 +476,6 @@ int main()
 			UpdateAppointment(DRead, TcNo);
 			DRead.close();
 			system("pause"); break;
-
-			/*cout << "8- Randevu güncelleme" << endl;
-			ifstream DosyaOku("Hasta.txt", ios::in);
-			cout << "TC no:";
-			cin >> TcNo;
-			if (TC == TcNo)
-			{
-				cout << "\n Hasta Bilgileri \n";
-				cout << "TC no :" << TcNo << endl;
-				cout << "Adý :" << patientName << endl;
-				cout << "Soyadý :" << patientSurname << endl;
-				cout << "Yaþý :" << patientAge << endl;
-				cout << "Telephoneu :" << Telephone << endl;
-				cout << "Cinsiyeti:" << patientGender << endl;
-
-				ofstream DosyaYaz;
-				DosyaYaz.open("RandevuAl.txt", ios::app);
-				{
-					cout << "\n Randevu Bilgileri \n";
-					cout << "\n Date :"; cin >> Date;
-					cout << "\n Doktor Adi :"; cin >> DoctorName;
-					cout << "\n Diagnosis :"; cin >> Diagnosis;
-					cout << "\n Muayene Feei :"; cin >> Fee;
-
-					DosyaYaz.close();
-					ofstream DosyaYaz;
-				}
-				DosyaOku.close();
-				ifstream DosyaOku;
-
-			}
-			else
-				cout << "Böyle bir kiþi bulunmamaktadýr.";
-
-			break; */
 		}
 		case 9:
 		{
@@ -526,50 +486,6 @@ int main()
 			InspectionInquiry(DRead, TcNo);
 			DRead.close();
 			system("pause"); break;
-
-			/*cout << "9- Hasta muayene kaydý" << endl;
-			ifstream DosyaOku;
-			DosyaOku.open("Hasta.txt", ios::in);
-
-
-			{
-
-				do {
-					if (DosyaOku.eof()) break;
-					else
-						DosyaOku >> TcNo >> DoctorName >> Diagnosis >> Assay >> Medicine;
-					cout << "\n Hasta Bilgileri \n";
-					cout << "\n Doktor Adý :" << DoctorName;
-					cout << "\n Teþhis:" << Diagnosis;
-					cout << "\n Tahlil Bilgileri :" << Assay;
-					cout << "\n Ýlaç :" << Medicine;
-				} while (true);
-
-
-				do {
-					if (DosyaOku.eof()) break;
-
-					else
-
-						DosyaOku >> TcNo >> patientName >> patientSurname >> patientAge >> Telephone >> patientGender;
-					cout << "\n Hasta Bilgileri \n";
-					cout << "TC no :" << TcNo << endl;
-					cout << "Adý :" << patientName << endl;
-					cout << "Soyadý :" << patientSurname << endl;
-					cout << "Yaþý :" << patientAge << endl;
-					cout << "Telephoneu :" << Telephone << endl;
-					cout << "Cinsiyeti:" << patientGender << endl;
-
-				} while (true);
-
-
-				ofstream DosyaYaz;
-				DosyaYaz.open("Randevu.txt", ios::app);
-				DosyaYaz.close();
-			}
-			DosyaOku.close();
-
-			break;*/
 		}
 		case 10:
 		{
@@ -581,13 +497,11 @@ int main()
 			exit(0);
 			break;
 		}
-
 		}
 		cout << "Ýþlem yapmaya devam etmek istiyor musunuz? (e/E: Ana Menüye Döner!) (h/H: Programdan Çýkar!)";
 		cin >> transaction;
-	} while (transaction == 'e' || transaction == 'E'); //Ýþlemi yaptýktan sonra karþýmýza tekrar menü
-	cout << endl; //çýkmasýný saðlýyor
-
+	} while (transaction == 'e' || transaction == 'E'); // After doing the process, we will see the menu again.
+	cout << endl;
 
 	system("cls");
 	cout << "Programý Kullandýðýnýz için Teþekkürler!!!" << "\n";

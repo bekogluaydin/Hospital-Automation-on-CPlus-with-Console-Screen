@@ -1,2 +1,3 @@
-11111111111 Elif Soyuk 16 555-567437,67 Kiz 23.12.2017 Aylin MideBulantisi 100
-22222222222 Aydin Bekoglu 20 678-4567456 Erkek 12.20.2019 Kazim Kalp 20
+11111111111 Elif Söyük 16 555-5674367 Kiz 23.12.2017 Aylin MideBulantisi 100
+22222222222 Aydin Bekoglu 16 598-7244861 Kiz 12.20.2019 Abdulrezzak Kalp 20
+33333333333 Muhterem Soyuk 20 678-4567456 Erkek 12.20.2019 Kazim Kalp 20
