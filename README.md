@@ -4,7 +4,7 @@ I used Visual Studio to compile C ++.
 I used the filing system (used fstream) instead of the database.
 
 
-It was an automation that I had done years and years ago when I doesn't have much experience. So some things are missing in automation. 
+The upload date of the project may appear here in 2020, but It was an automation that I had done years and years ago (2017-2018) when I doesn't have much experience. So some things are missing in automation. 
 etc.
 
 + Patient and Appointment Deletion
