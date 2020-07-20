@@ -1,0 +1,24 @@
+The first digit determines the background, and the second digit determines the font color.
+
+etc. 01
+
+
+COLOR CODES
+
+0=Siyah
+1=Mavi 
+2=Yeþil
+3=Deniz Mavisi 
+4=Kýrmýzý
+5=Mor
+6=Sarý
+7=Beyaz
+8=Gri
+9=Açýk Mavi
+
+A=Açýk Yeþil
+B=Açýk Deniz Mavisi
+C=Açýk Kýrmýzý
+D=Açýk Mor
+E=Açýk Sarý
+F=Parlak Beyaz
